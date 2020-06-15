@@ -1,0 +1,157 @@
+---
+- name: project recon
+  hosts: slave.example.com
+  remote_user: root
+  become: true
+  tasks: 
+   - name: fetching files from the slaves.:.:.:.:.:.
+     debug:
+      msg: "Overall log data from {{ ansible_hostname }}"        
+   - fetch: 
+      src: /var/log/messages
+      dest: /home/indra/recon/slave1/slaveinfo
+      flat: yes
+   - debug:
+      msg: "dns host resolve file from {{ ansible_hostname }}"
+   - fetch:
+      src: /etc/hosts
+      dest: /home/indra/recon/slave1/slavehosts
+      flat: yes
+   - debug:
+      msg: "Operating System information about {{ ansible_hostname }}"
+   - fetch: 
+      src: /etc/os-release
+      dest: /home/indra/recon/slave1/slaverelease        
+      flat: yes   
+   - debug:
+      msg: "user detailed list from {{ ansible_hostname }}"
+   - fetch:
+      src: /etc/passwd
+      dest: /home/indra/recon/slave1/slaveuser
+      flat: yes    
+ 
+- name: project recon
+  hosts: slave2.example.com
+  remote_user: root
+  become: true
+  tasks:
+   - name: fetching files please wait.:.:.:.:.:.
+     debug: 
+      msg: "log data file from {{ ansible_hostname }}"      
+   - fetch:
+      src: /var/log/messages
+      dest: /home/indra/recon/slave2/slaveinfo
+      flat: yes
+   - debug:
+      msg: "dns host resolve file from {{ ansible_hostname }}"
+   - fetch:
+      src: /etc/hosts
+      dest: /home/indra/recon/slave2/slavehosts
+      flat: yes
+   - debug:
+      msg: "Operating System information about {{ ansible_hostname }}"
+   - fetch:
+      src: /etc/os-release
+      dest: /home/indra/recon/slave2/slaverelease
+      flat: yes
+   - debug:
+      msg: "user detailed list from {{ ansible_hostname }}"
+   - fetch:
+      src: /etc/passwd
+      dest: /home/indra/recon/slave2/slaveuser
+      flat: yes
+
+- name: mailing data
+  hosts: localhost
+  remote_user: root
+  become: true
+  tasks: 
+   - name: sending userfiles now please wait.:.:.:.:.:.:.
+     mail: 
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"  
+      subject: "Project Recon"
+      body: "Hey there, this is a passwd file from slave node1"
+      attach: "/home/indra/recon/slave1/slaveuser"
+      secure: starttls  
+   - name: sending userlogs now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this a log file from slave node1"
+      attach: "/home/indra/recon/slave1/slaveinfo"
+      secure: starttls  
+   - name: sending dnshosts file now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this a dnshosts file from slave node1"
+      attach: "/home/indra/recon/slave1/slavehosts"
+      secure: starttls  
+   - name: sending osrelease file now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "this is a osrelease file from slave node1"
+      attach: "/home/indra/recon/slave1/slaverelease"      
+      secure: starttls  
+   - name: sending userfiles now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this is a passwd file from slave node1"
+      attach: "/home/indra/recon/slave2/slaveuser"
+      secure: starttls  
+   - name: sending log file now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this is a userlog file from slave node1"
+      attach: "/home/indra/recon/slave2/slaveinfo"
+      secure: starttls  
+   - name: sending dnshosts file now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this is a dnshosts file from slave node1"
+      attach: "/home/indra/recon/slave2/slavehosts"
+      secure: starttls  
+   - name: sending osrelease now please wait.:.:.:.:.:.:.
+     mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "youremail"
+      password: "####"
+      to: "user <ansiproject7@gmail.com>"
+      subject: "Project Recon"
+      body: "Hey there, this is a osrelease file from slave node1"
+      attach: "/home/indra/recon/slave2/slaverelease"
+      secure: starttls        
+                    
